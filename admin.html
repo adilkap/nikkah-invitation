@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guest Admin — Amna &amp; Adil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ============ LOGIN ============ -->
+  <section class="login-screen" id="loginScreen">
+    <form class="login-card" id="loginForm">
+      <h1 class="login-title">Amna &amp; Adil</h1>
+      <p class="login-sub">Guest Administration</p>
+      <input type="email" id="loginEmail" placeholder="Email" autocomplete="username" required />
+      <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required />
+      <button type="submit" id="loginBtn">Sign in</button>
+      <p class="login-error" id="loginError" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <main class="dash" id="dash" hidden>
+    <header class="dash-head">
+      <div>
+        <h1 class="dash-title">Guest List</h1>
+        <p class="dash-sub">Nikkah of Amna &amp; Adil</p>
+      </div>
+      <button class="signout" id="signout" type="button">Sign out</button>
+    </header>
+
+    <!-- summary -->
+    <section class="cards" id="cards">
+      <div class="stat"><span class="stat-num" id="sInvites">0</span><span class="stat-label">Invites</span></div>
+      <div class="stat"><span class="stat-num" id="sSeats">0</span><span class="stat-label">Seats invited</span></div>
+      <div class="stat"><span class="stat-num" id="sConfirmed">0</span><span class="stat-label">Seats confirmed</span></div>
+      <div class="stat"><span class="stat-num" id="sAccepted">0</span><span class="stat-label">Accepted</span></div>
+      <div class="stat"><span class="stat-num" id="sDeclined">0</span><span class="stat-label">Declined</span></div>
+      <div class="stat"><span class="stat-num" id="sPending">0</span><span class="stat-label">Pending</span></div>
+    </section>
+
+    <!-- add guest -->
+    <form class="add-form" id="addForm">
+      <input type="text" id="addName" placeholder="Guest / family name" required />
+      <label class="add-seats">
+        Invited
+        <input type="number" id="addCount" min="1" value="2" required />
+      </label>
+      <button type="submit" id="addBtn">Add guest</button>
+      <p class="add-error" id="addError" aria-live="polite"></p>
+    </form>
+
+    <!-- table -->
+    <div class="table-wrap">
+      <table class="guest-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Invited</th>
+            <th>Status</th>
+            <th>Confirmed</th>
+            <th>Note</th>
+            <th>Invite link</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guestRows"></tbody>
+      </table>
+      <p class="empty-state" id="emptyState" hidden>No guests yet — add your first above.</p>
+    </div>
+  </main>
+
+  <p class="config-warning" id="configWarning" hidden>
+    ⚠️ Supabase isn't configured yet. Add your project URL and anon key in <code>js/config.js</code>.
+  </p>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

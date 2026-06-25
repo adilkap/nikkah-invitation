@@ -29,6 +29,12 @@
         </div>
         <div class="seam" aria-hidden="true"></div>
 
+        <!-- personalised addressee (filled from the invite link) -->
+        <div class="env-to" id="envTo" hidden>
+          <span class="env-to-label">To</span>
+          <span class="env-to-name" id="envToName"></span>
+        </div>
+
         <!-- gold wax seal -->
         <div class="seal" id="seal" aria-hidden="true">
           <svg viewBox="0 0 100 100" class="seal-svg">
@@ -80,13 +86,45 @@
 
         <p class="venue">The Grand Pavilion<br />Toronto, Ontario</p>
 
-        <a class="rsvp-btn" href="mailto:rsvp@example.com?subject=Nikkah%20RSVP%20—%20Amna%20%26%20Adil">RSVP</a>
+        <button class="rsvp-btn" id="rsvpBtn" type="button" hidden>RSVP</button>
       </div>
     </article>
 
     <button class="reset-btn" id="reset" type="button" hidden>Close invitation</button>
+
+    <!-- ================= RSVP MODAL ================= -->
+    <div class="rsvp-modal" id="rsvpModal" hidden>
+      <div class="rsvp-backdrop" id="rsvpBackdrop"></div>
+      <div class="rsvp-box" role="dialog" aria-modal="true" aria-labelledby="rsvpName">
+        <button class="rsvp-close" id="rsvpClose" type="button" aria-label="Close">&times;</button>
+
+        <p class="rsvp-eyebrow">Kindly Respond</p>
+        <h2 class="rsvp-name" id="rsvpName">&nbsp;</h2>
+        <p class="rsvp-invited" id="rsvpInvited"></p>
+
+        <div class="rsvp-choice">
+          <button class="choice-btn" data-choice="accepted" id="btnAccept" type="button">Joyfully Accept</button>
+          <button class="choice-btn" data-choice="declined" id="btnDecline" type="button">Regretfully Decline</button>
+        </div>
+
+        <div class="rsvp-seats" id="rsvpSeats" hidden>
+          <label for="seatCount">Guests attending</label>
+          <div class="seat-stepper">
+            <button type="button" id="seatMinus" aria-label="Fewer">&minus;</button>
+            <span id="seatCount">1</span>
+            <button type="button" id="seatPlus" aria-label="More">+</button>
+          </div>
+        </div>
+
+        <textarea class="rsvp-note" id="rsvpNote" rows="2" placeholder="A note for the couple (optional)"></textarea>
+
+        <button class="rsvp-submit" id="rsvpSubmit" type="button" disabled>Send RSVP</button>
+        <p class="rsvp-feedback" id="rsvpFeedback" aria-live="polite"></p>
+      </div>
+    </div>
   </main>
 
   <script src="script.js"></script>
+  <script type="module" src="js/invite.js"></script>
 </body>
 </html>
