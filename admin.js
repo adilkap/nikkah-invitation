@@ -6,6 +6,7 @@ const dash        = document.getElementById('dash');
 const loginForm   = document.getElementById('loginForm');
 const loginEmail  = document.getElementById('loginEmail');
 const loginPass   = document.getElementById('loginPassword');
+const loginBtn    = document.getElementById('loginBtn');
 const loginError  = document.getElementById('loginError');
 const signoutBtn  = document.getElementById('signout');
 const addForm     = document.getElementById('addForm');
@@ -25,29 +26,30 @@ if (!configured()) {
 }
 
 // ---------- auth ----------
-async function refresh() {
-  const { data: { session } } = await supabase.auth.getSession();
+// Toggle the UI from a known session. NOTE: never call supabase.auth.*
+// methods inside onAuthStateChange — it deadlocks the client. We use the
+// session the listener hands us and defer DB work out of the callback.
+function applySession(session) {
   const signedIn = !!session;
   loginScreen.hidden = signedIn;
   dash.hidden = !signedIn;
-  if (signedIn) loadGuests();
+  if (signedIn) setTimeout(loadGuests, 0);
 }
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   loginError.textContent = '';
+  loginBtn.disabled = true;
   const { error } = await supabase.auth.signInWithPassword({
     email: loginEmail.value.trim(),
     password: loginPass.value,
   });
+  loginBtn.disabled = false;
   if (error) { loginError.textContent = error.message; return; }
-  refresh();
+  // onAuthStateChange fires with the new session and updates the UI.
 });
 
-signoutBtn.addEventListener('click', async () => {
-  await supabase.auth.signOut();
-  refresh();
-});
+signoutBtn.addEventListener('click', () => { supabase.auth.signOut(); });
 
 // ---------- guests ----------
 function esc(s) {
@@ -210,6 +212,12 @@ async function saveGuest(id) {
   loadGuests();
 }
 
-// react to auth changes (e.g. token refresh, sign-out in another tab)
-supabase.auth.onAuthStateChange(() => refresh());
-refresh();
+// react to auth changes (sign-in, sign-out, token refresh) using the
+// session the listener provides — do NOT call auth methods in here.
+supabase.auth.onAuthStateChange((_event, session) => applySession(session));
+
+// initial state check, outside any callback (safe to await here)
+(async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  applySession(session);
+})();
