@@ -30,13 +30,13 @@ create table if not exists public.guests (
 -- ---------- row level security ----------
 alter table public.guests enable row level security;
 
--- Admin (only the allow-listed email) gets full access.
+-- Admins (only the allow-listed emails) get full access.
 drop policy if exists "admin full access" on public.guests;
 create policy "admin full access" on public.guests
   for all
   to authenticated
-  using      (auth.jwt() ->> 'email' = 'adilkapadia0@gmail.com')
-  with check (auth.jwt() ->> 'email' = 'adilkapadia0@gmail.com');
+  using      (auth.jwt() ->> 'email' in ('adilkapadia0@gmail.com', 'nikkah@gmail.com'))
+  with check (auth.jwt() ->> 'email' in ('adilkapadia0@gmail.com', 'nikkah@gmail.com'));
 
 -- NOTE: no policy for the anon role => anon cannot select/insert/update/delete.
 
