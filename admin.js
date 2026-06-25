@@ -56,6 +56,19 @@ function esc(s) {
 }
 
 const STATUS_LABEL = { pending: 'Pending', accepted: 'Accepted', declined: 'Declined' };
+let guestsCache = [];
+
+// delegated row interactions (survive re-renders)
+guestRows.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (btn) handleAction(btn.dataset.action, btn.dataset.id);
+});
+guestRows.addEventListener('keydown', (e) => {
+  const row = e.target.closest('tr.editing');
+  if (!row) return;
+  if (e.key === 'Enter')  { e.preventDefault(); saveGuest(row.dataset.id); }
+  if (e.key === 'Escape') { loadGuests(); }
+});
 
 async function loadGuests() {
   const { data, error } = await supabase
@@ -64,7 +77,7 @@ async function loadGuests() {
     .order('created_at', { ascending: true });
 
   if (error) {
-    guestRows.innerHTML = `<tr><td colspan="7" class="row-error">${esc(error.message)}</td></tr>`;
+    guestRows.innerHTML = `<tr><td colspan="9" class="row-error">${esc(error.message)}</td></tr>`;
     return;
   }
   render(data || []);
@@ -86,11 +99,14 @@ function render(guests) {
   document.getElementById('sDeclined').textContent  = sum.declined;
   document.getElementById('sPending').textContent   = sum.pending;
 
+  guestsCache = guests;
   emptyState.hidden = guests.length > 0;
   guestRows.innerHTML = guests.map(rowHtml).join('');
-  guestRows.querySelectorAll('[data-action]').forEach((el) => {
-    el.addEventListener('click', () => handleAction(el.dataset.action, el.dataset.id));
-  });
+}
+
+function fmtDate(s) {
+  if (!s) return '—';
+  return new Date(s).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function rowHtml(g) {
@@ -101,7 +117,9 @@ function rowHtml(g) {
       <td data-field="invited" class="num">${g.num_invited}</td>
       <td><span class="badge ${g.rsvp_status}">${STATUS_LABEL[g.rsvp_status]}</span></td>
       <td class="num">${g.num_confirmed}</td>
-      <td class="note">${esc(g.note) || '—'}</td>
+      <td class="col-hide date">${fmtDate(g.created_at)}</td>
+      <td class="col-hide date">${fmtDate(g.responded_at)}</td>
+      <td class="col-hide note">${esc(g.note) || '—'}</td>
       <td><button class="link-btn" data-action="copy" data-id="${g.id}" title="${esc(link)}">Copy link</button></td>
       <td class="row-actions">
         <button class="icon-btn" data-action="edit"   data-id="${g.id}" title="Edit">✎</button>
@@ -131,6 +149,8 @@ async function handleAction(action, id) {
   if (action === 'copy')   return copyLink(id);
   if (action === 'delete') return deleteGuest(id);
   if (action === 'edit')   return editGuest(id);
+  if (action === 'save')   return saveGuest(id);
+  if (action === 'cancel') return loadGuests();
 }
 
 async function copyLink(id) {
@@ -153,22 +173,38 @@ async function deleteGuest(id) {
   loadGuests();
 }
 
-async function editGuest(id) {
+function editGuest(id) {
+  const g = guestsCache.find((x) => x.id === id);
+  if (!g) return;
   const tr = guestRows.querySelector(`tr[data-id="${id}"]`);
-  const nameCell = tr.querySelector('[data-field="name"]');
-  const invitedCell = tr.querySelector('[data-field="invited"]');
-  const curName = nameCell.textContent;
-  const curInvited = invitedCell.textContent;
+  tr.classList.add('editing');
 
-  const name = prompt('Guest / family name:', curName);
-  if (name === null) return;
-  const invitedStr = prompt('Number invited:', curInvited);
-  if (invitedStr === null) return;
-  const num_invited = parseInt(invitedStr, 10);
+  const minInvited = Math.max(1, g.num_confirmed);
+  tr.querySelector('[data-field="name"]').innerHTML =
+    `<input class="edit-name" type="text" value="${esc(g.display_name)}" />`;
+  tr.querySelector('[data-field="invited"]').innerHTML =
+    `<input class="edit-invited" type="number" min="${minInvited}" value="${g.num_invited}" />`;
+  tr.querySelector('.row-actions').innerHTML =
+    `<button class="icon-btn" data-action="save"   data-id="${id}" title="Save">✓</button>
+     <button class="icon-btn" data-action="cancel" data-id="${id}" title="Cancel">✕</button>`;
+  tr.querySelector('.edit-name').focus();
+}
+
+async function saveGuest(id) {
+  const g = guestsCache.find((x) => x.id === id);
+  const tr = guestRows.querySelector(`tr[data-id="${id}"]`);
+  const display_name = tr.querySelector('.edit-name').value.trim();
+  const num_invited = parseInt(tr.querySelector('.edit-invited').value, 10);
+
+  if (!display_name) { alert('Please enter a name.'); return; }
   if (!(num_invited >= 1)) { alert('Invited must be at least 1.'); return; }
+  if (g && num_invited < g.num_confirmed) {
+    alert(`This guest has already confirmed ${g.num_confirmed} — invited can't be lower.`);
+    return;
+  }
 
   const { error } = await supabase.from('guests')
-    .update({ display_name: name.trim(), num_invited })
+    .update({ display_name, num_invited })
     .eq('id', id);
   if (error) { alert(error.message); return; }
   loadGuests();

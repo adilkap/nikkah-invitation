@@ -118,6 +118,18 @@ body {
 .icon-btn { font-size: 1rem; background: none; border: none; cursor: pointer; opacity: .6; padding: 2px 5px; }
 .icon-btn:hover { opacity: 1; }
 
+.guest-table .date { color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* inline edit inputs */
+tr.editing td { background: #fbf6ea; }
+.edit-name, .edit-invited {
+  font-family: inherit; font-size: .98rem; color: var(--ink);
+  border: 1px solid var(--gold-soft); border-radius: 6px; padding: .35em .5em; background: #fff;
+}
+.edit-name { width: 100%; }
+.edit-invited { width: 64px; text-align: center; }
+.edit-name:focus, .edit-invited:focus { outline: none; border-color: var(--gold-deep); }
+
 .empty-state { padding: 28px; text-align: center; color: var(--ink-soft); font-style: italic; }
 
 .config-warning {
@@ -126,8 +138,7 @@ body {
 }
 .config-warning code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 4px; }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
-  .guest-table .note { display: none; }
-  .guest-table thead th:nth-child(5) { display: none; }
+  .guest-table .col-hide { display: none; }
 }
