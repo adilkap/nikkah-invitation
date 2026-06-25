@@ -108,13 +108,13 @@ begin
   update public.guests
      set rsvp_status   = p_status,
          num_confirmed = p_confirmed,
-         note          = coalesce(nullif(p_note, ''), note),
+         note          = coalesce(nullif(p_note, ''), g.note),
          responded_at  = now()
    where token = p_token;
 
   return query
-    select display_name, num_invited, rsvp_status, num_confirmed, note
-    from public.guests where token = p_token;
+    select gg.display_name, gg.num_invited, gg.rsvp_status, gg.num_confirmed, gg.note
+    from public.guests gg where gg.token = p_token;
 end;
 $$;
 
