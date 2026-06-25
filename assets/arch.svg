@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520" fill="none">
+  <defs>
+    <linearGradient id="goldBand" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%"  stop-color="#f0dcab"/>
+      <stop offset="24%" stop-color="#d6bb7c"/>
+      <stop offset="52%" stop-color="#bb9c58"/>
+      <stop offset="80%" stop-color="#9c7e3c"/>
+      <stop offset="100%" stop-color="#7c612a"/>
+    </linearGradient>
+    <linearGradient id="goldHi" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7ecc7"/>
+      <stop offset="100%" stop-color="#c4a35e"/>
+    </linearGradient>
+    <linearGradient id="umber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#473414"/>
+      <stop offset="100%" stop-color="#241608"/>
+    </linearGradient>
+
+    <!-- fine, dense arabesque -->
+    <pattern id="fil" width="17" height="17" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke-linecap="round">
+        <g stroke="#cba95e" stroke-width="0.9">
+          <path d="M8.5,1 C4.5,3.6 4.5,6.8 8.5,8.5 C12.5,6.8 12.5,3.6 8.5,1"/>
+          <path d="M8.5,16 C4.5,13.4 4.5,10.2 8.5,8.5 C12.5,10.2 12.5,13.4 8.5,16"/>
+          <path d="M1,8.5 C3.6,4.5 6.8,4.5 8.5,8.5 C6.8,12.5 3.6,12.5 1,8.5"/>
+          <path d="M16,8.5 C13.4,4.5 10.2,4.5 8.5,8.5 C10.2,12.5 13.4,12.5 16,8.5"/>
+        </g>
+        <g stroke="#8a6c34" stroke-width="0.55">
+          <path d="M1.5,1.5 C3.8,3 4.6,4.6 4.6,6.8"/><path d="M15.5,1.5 C13.2,3 12.4,4.6 12.4,6.8"/>
+          <path d="M1.5,15.5 C3.8,14 4.6,12.4 4.6,10.2"/><path d="M15.5,15.5 C13.2,14 12.4,12.4 12.4,10.2"/>
+        </g>
+      </g>
+      <circle cx="8.5" cy="8.5" r="1.15" fill="#ecd9a6"/>
+      <circle cx="0" cy="0" r="0.85" fill="#cba95e"/>
+      <circle cx="17" cy="0" r="0.85" fill="#cba95e"/>
+      <circle cx="0" cy="17" r="0.85" fill="#cba95e"/>
+      <circle cx="17" cy="17" r="0.85" fill="#cba95e"/>
+    </pattern>
+
+    <!-- wider, shorter open ogee centreline (band built by stroking) -->
+    <path id="p" d="M56,514 L56,212 C56,150 80,120 132,99 C166,86 176,82 200,60 C224,82 234,86 268,99 C320,120 344,150 344,212 L344,514"/>
+  </defs>
+
+  <!-- ===== carved band, concentric strokes (thin & intricate) ===== -->
+  <use href="#p" stroke="#241809" stroke-width="34"/>                                <!-- outer shadow rim -->
+  <use href="#p" stroke="url(#goldBand)" stroke-width="31" stroke-linejoin="miter"/> <!-- gold molding -->
+  <use href="#p" stroke="#1c1206" stroke-width="25"/>                                <!-- recessed channel -->
+  <use href="#p" stroke="url(#umber)" stroke-width="23"/>
+  <use href="#p" stroke="url(#fil)"  stroke-width="23"/>                             <!-- arabesque carving -->
+  <use href="#p" stroke="#7c612a" stroke-width="2"   opacity="0.85"/>               <!-- inner rim -->
+  <use href="#p" stroke="#f1e2b4" stroke-width="0.9" opacity="0.5"/>                <!-- highlight line -->
+
+  <!-- delicate scroll vine threading the gold molding -->
+  <use href="#p" stroke="#6b521f" stroke-width="1" opacity="0.4" stroke-dasharray="5 4 1.5 4" stroke-linecap="round"/>
+
+  <!-- ===== finial (clean, no gems) ===== -->
+  <g stroke="#7c612a" stroke-width="0.7">
+    <path d="M182,60 Q200,47 218,60 Q200,67 182,60 Z" fill="url(#goldHi)"/>
+    <path d="M188,57 Q200,46 212,57 Q200,62 188,57 Z" fill="url(#goldBand)"/>
+    <circle cx="200" cy="47" r="5.5" fill="url(#goldHi)"/>
+    <path d="M200,22 C195,31 195,38 200,42 C205,38 205,31 200,22 Z" fill="url(#goldHi)"/>
+    <circle cx="200" cy="18" r="2.4" fill="url(#goldBand)"/>
+  </g>
+</svg>

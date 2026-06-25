@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180" viewBox="0 0 300 180">
+  <g fill="#b7a279" opacity="0.5">
+    <!-- central onion dome -->
+    <path d="M150,30 C162,30 172,44 172,60 C172,78 150,92 150,92 C150,92 128,78 128,60 C128,44 138,30 150,30 Z"/>
+    <path d="M148,18 h4 v14 h-4 z"/>
+    <circle cx="150" cy="16" r="3"/>
+    <rect x="120" y="90" width="60" height="70"/>
+    <!-- side domes -->
+    <path d="M92,70 C100,70 106,80 106,90 C106,102 92,110 92,110 C92,110 78,102 78,90 C78,80 84,70 92,70Z"/>
+    <rect x="80" y="108" width="24" height="52"/>
+    <path d="M208,70 C216,70 222,80 222,90 C222,102 208,110 208,110 C208,110 194,102 194,90 C194,80 200,70 208,70Z"/>
+    <rect x="196" y="108" width="24" height="52"/>
+    <!-- minarets -->
+    <rect x="60" y="60" width="9" height="100"/>
+    <path d="M58,60 h13 l-3,-8 h-7 z"/>
+    <circle cx="64.5" cy="48" r="4"/>
+    <rect x="231" y="60" width="9" height="100"/>
+    <path d="M229,60 h13 l-3,-8 h-7 z"/>
+    <circle cx="235.5" cy="48" r="4"/>
+  </g>
+</svg>

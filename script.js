@@ -18,15 +18,17 @@
     // 1. break the seal & swing the doors
     envelope.classList.add('is-open');
 
-    // 2. fade the whole envelope away once doors have started swinging
-    setTimeout(() => scene.classList.add('gone'), 850);
+    // 2. fade the envelope away while the doors are still swinging
+    setTimeout(() => scene.classList.add('gone'), 600);
 
-    // 3. raise the card into view
+    // 3. raise the card in — overlaps the fade so it feels continuous
     setTimeout(() => {
       card.classList.add('show');
       card.setAttribute('aria-hidden', 'false');
-      reset.hidden = false;
-    }, 950);
+    }, 680);
+
+    // 4. offer the reset once the card has settled
+    setTimeout(() => { reset.hidden = false; }, 1900);
   }
 
   function closeInvite() {
