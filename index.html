@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amna &amp; Adil — Nikkah Invitation</title>
+  <meta name="description" content="You are cordially invited to the Nikkah of Amna &amp; Adil." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Amiri:wght@400;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <main class="stage" id="stage">
+
+    <!-- ================= ENVELOPE ================= -->
+    <section class="envelope-scene" id="scene">
+      <p class="open-hint" id="hint">Tap the seal to open</p>
+
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open the invitation">
+        <div class="door door-left">
+          <div class="leaf-field"></div>
+        </div>
+        <div class="door door-right">
+          <div class="leaf-field"></div>
+        </div>
+        <div class="seam" aria-hidden="true"></div>
+
+        <!-- gold wax seal -->
+        <div class="seal" id="seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="seal-svg">
+            <defs>
+              <radialGradient id="wax" cx="38%" cy="32%" r="75%">
+                <stop offset="0%" stop-color="#d9b876"/>
+                <stop offset="45%" stop-color="#b8924a"/>
+                <stop offset="100%" stop-color="#876327"/>
+              </radialGradient>
+            </defs>
+            <path class="seal-blob" fill="url(#wax)" d="M50 4c10 0 14 6 24 9s17 1 19 12-5 15-3 25 7 16-1 24-17 3-26 8-13 11-23 8-11-10-21-15S4 78 3 67s8-14 7-25S3 27 11 19s17-1 26-6S40 4 50 4z"/>
+            <text x="50" y="51" text-anchor="middle" dominant-baseline="central"
+                  font-family="'Great Vibes', cursive" font-size="40" fill="#fdf3dc"
+                  opacity="0.92" letter-spacing="-2">A&amp;A</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INVITATION CARD ================= -->
+    <article class="card" id="card" aria-hidden="true">
+      <div class="card-bg" aria-hidden="true"></div>
+
+      <!-- gold ornate frame -->
+      <div class="frame" aria-hidden="true"></div>
+
+      <!-- floral corners -->
+      <div class="floral floral-tl" aria-hidden="true"></div>
+      <div class="floral floral-br" aria-hidden="true"></div>
+
+      <div class="card-content">
+        <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+
+        <p class="blessing">With the divine blessings of Allah,<br />we request the honour of your presence</p>
+
+        <div class="divider"><span class="d-line"></span><span class="d-orn">&#10070;</span><span class="d-line"></span></div>
+
+        <h1 class="names">
+          <span class="name name-a">Amna</span>
+          <span class="amp">&amp;</span>
+          <span class="name name-b">Adil</span>
+        </h1>
+
+        <p class="occasion">on the auspicious occasion of their <em>Nikkah</em></p>
+
+        <div class="divider"><span class="d-line"></span><span class="d-orn">&#10070;</span><span class="d-line"></span></div>
+
+        <div class="when">
+          <p class="when-date">Saturday, 12th September</p>
+          <p class="when-time">at 2:00 PM</p>
+        </div>
+
+        <p class="venue-label">&#9906; Venue</p>
+        <p class="venue">The Grand Pavilion<br />Toronto, Ontario</p>
+
+        <p class="closing">Your presence will be a blessing for us</p>
+
+        <a class="rsvp-btn" href="mailto:rsvp@example.com?subject=Nikkah%20RSVP%20—%20Amna%20%26%20Adil">RSVP</a>
+      </div>
+    </article>
+
+    <button class="reset-btn" id="reset" type="button" hidden>Close invitation</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
